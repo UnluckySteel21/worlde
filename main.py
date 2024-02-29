@@ -8,32 +8,36 @@ looks for all the words in certain file
 """
 def read_all_words():
 
-    # checks if any command line args present
-    if len(sys.argv) > 1:
+    all_words = []
 
-        # checks if number is 5-8
-        if int(sys.argv[1]) in range(5, 9):
+    """
+    TODO: 
+    write a code that do the following...
+    1) checks if any command line arguments present
+    2) checks if argument is number between 5 and 8
+    3) opens correct file from /collections for reading
+    4) reads all words in list
+    
+    raises ValueError if number is not correct or no argument provided
+    add comments where necessary
+    """
 
-            # setting word length
-            word_length = sys.argv[1]
-
-            # opening file for reading
-            with open(f"collections\{word_length}.txt", "r") as file:
-
-                # reading whole file in list
-                words = file.read().split("\n")
-                return words
-        else:
-            raise ValueError("No such file")
-    else:
-        raise ValueError("No argument provided")
-
+    return all_words
 
 """
 selects single random word
 """
 def select_random_word(all_words):
-    word = random.choice(all_words)
+
+    word = ""
+
+    """
+    TODO:
+    write a code that selects one single random word and returns that word
+    random.choice() library comes handy here
+    add comments where necessary
+    """
+    
     return word
 
 
@@ -41,29 +45,36 @@ def select_random_word(all_words):
 prompts the user for input
 """
 def get_guess(word):
-    word_size = len(word)
-    guess = input(f"Please enter {word_size}-letter word: ")
-    return guess
+
+    """
+    TODO:
+    write a code that prompts player for word in correct length
+    add comments where necessary
+    """
+
+    return ...
 
 
 """
 iterates over word and checks for correct/wrong letters
 """
 def check_guess(guess, word):
-    # makes a strings for defining colors of letters
-    # example: RRGYRY
+    # string for color-coding the word user enters
+    # example: RRGYRY (R - red, G - green, Y - yellow)
     colorized_guess = "" * len(word)
+
+    """
+    TODO:
+    write a code that 
+    1) loops over the word user entered (done)
+    2) checks for letters in correct places/correct letters in wrong places/wrong letters
+    3) makes color-coded string for printing out result
+    4) returns color-coded string
+    """
 
     # loops through both letters and indices in word
     for position, letter in enumerate(guess):
-
-        # exact guess 
-        if word[position] == guess[position]:
-            colorized_guess += "G" # G - green
-        elif letter in word:
-            colorized_guess += "Y" # Y - yellow
-        else:
-            colorized_guess += "R" # R - red
+        ...
 
     return colorized_guess 
 
@@ -79,14 +90,13 @@ def print_word(colorized_guess, guess, guesses):
         "R": "red"
     }
 
-    print(f"Guess {guesses}: ", end="")
-    for position, color in enumerate(colorized_guess):
+    """
+    TODO:
+    write a code that 
+    1) prints out number of guesses user entered
+    2) prints out colorized word by looping over letters (use dictionary with defined colors)
+    """
 
-        # using rich to print using colors
-        # pattern: [color]text to print[/color]
-        print(f"[{colors[color]}]{guess[position]}[/{colors[color]}]", end="")
-    
-    print() # ends line
     return None
 
 
@@ -101,24 +111,33 @@ def main():
         print(e)
 
     print("[green]This is WORDLE[/green]")
-    guesses = 0 # for counting user inputs
+
+    # for counting user inputs
+    guesses = 0 
 
     guess = ""
 
-    # repeating prompting for input when word is too short or too long
+    # repeats prompting until user guess the word or no more available guesses
     while guess != word: 
         guess = ""
+
+        # repeats prompting for input when word is too short or too long
         while len(guess) != len(word):
             guess = get_guess(word)
 
-        guesses += 1 # next guess
+        # next guess
+        guesses += 1 
+
         colorized_guess = check_guess(guess, word)
+
+        # prints colorized word
         print_word(colorized_guess, guess, guesses)
 
         if guesses > 5:
             print("No luck today!")
             break
     else:
+        # VICTORY!
         print("You guessed the word!")
 
 if __name__ == "__main__":
